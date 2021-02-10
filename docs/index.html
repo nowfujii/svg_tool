@@ -1,0 +1,283 @@
+<!DOCTYPE html>
+<html lang="ja">
+  <head>
+    <meta charset="UTF-8">
+    <meta http-equiv="content-type" charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Super筆順 for Web</title>
+    <meta name="description" content="NOWPRO SVGアニメーション再生ツール" />
+    <link rel="stylesheet" href="style/base.css">
+    <link rel="stylesheet" href="style/form.css">
+    <link rel="stylesheet" href="style/intro.css">
+    <link rel="stylesheet" href="style/sidebar.css">
+    <link rel="stylesheet" href="style/viewer.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/codemirror/5.46.0/codemirror.css">
+  </head>
+
+  <body>
+    <!-- Viewヘッダー -->
+    <div class="viewHeader" id="viewHeader">
+<!--        <span style="text-align: left;" >-->
+          <button class="close-sidebar" id="close-sidebar" type="button" onclick="closeSidebar()"          >三</button>　
+          <button class="stroke-back"   id="stroke-back"   type="button" onclick="optionCtrl.strokeBack()" >◀</button>　
+          <button class="stroke-next"   id="stroke-next"   type="button" onclick="optionCtrl.strokeNext()" >▶</button>　
+          <button class="full-width"    id="full-width"    type="button" onclick="optionCtrl.updateParam()"       >更新</button>
+<!--        </span>-->
+
+        <span class="stroke-suu" >
+          <font size="4" color="#ffffff">　
+            <span id="outputStrokeNow"> 0</span> 画目／ <span id="outputStrokeSuu"> 0</span>画中 
+            <span id="message" hidden>ViewBox: (<span></span>)</span>
+          </font>
+        </span>
+    </div>
+
+<!-- SVG表示メイン -->
+    <div class="viewer" id="viewer">
+      <main class="main">
+        <label class="viewer-switch">
+          <div class="alert-error"></div>
+        </label>
+        <div id="svg-div" style="text-align: center;"></div>
+      </main>
+
+      <footer class="footer">
+        <div class="license" style="text-align: center;">
+          <a href="https://github.com/maxwellito/vivus/">[Vivus] ©maxwellito <br></a>
+          <a href="http://kanjivg.tagaini.net/">[kanjivg] ©2009-2018 Ulrich Apel-Licensing<br></a>
+          <a href="https://www.nowpro.co.jp/">Copyright ©2020 NOWPRODUCTION CO.,LTD<br></a>
+        </div>
+      </footer>
+    </div>
+
+<!-- サイドバー -->
+    <div class="sidebar" id="sidebar">
+      <p class="sidebar-head">Super筆順 for Web<img src="assets/NOWLOGO_CMYK.svg" alt="NOWPRODUCTION"></p>
+<!--      <p class="sidebar-head">KANJIVG筆順フォントSVGへCSSにてアニメーション情報を追記します。</p>-->
+
+<!-- タブ-->
+      <div class="tab">
+        <div class="tab_item on"><span class="tab_link" data-tab-body="1">制御</span></div>
+        <div class="tab_item">   <span class="tab_link" data-tab-body="2">漢字情報</span></div>
+        <div class="tab_item">   <span class="tab_link" data-tab-body="3">その他</span></div>
+      </div>
+      <div class="tab-body">
+        <!-- 制御　タブ-->
+        <div class="tab-body_item tab-body_item-1 on">
+          <form>
+            <fieldset class="kanjivg-class-panel">
+              <div class="form-input-kanji">
+                <label class="form-input-inline">
+                  <span class="label">文字 </span>
+                  <input type="text" id="kanjiWord" name="kanjiWord" value="" size="5"/>
+<!--              <input type="submit" id="kanjiSubmit" name="kanjiSubmit" value="表示" onclick="optionCtrl.draw()" />-->
+                  <button type="button" id="kanjiSubmit" name="kanjiSubmit" onclick="optionCtrl.updateParam()" class="full-width" >更新</button>
+                </label>
+              </div>
+
+              <div class="form-input-draft">
+                <label class="form-input-inline">
+                  <span class="label">下書き表示</span>
+                  <input type="checkbox" id="draft" name="draft" value="ON" checked="checked" onchange="optionCtrl.   updateForm()">
+                  <span class="checkbox-label" label-on="ON" label-off="OFF"></span>
+                </label>
+              </div>
+    
+              <div class="form-input-displayOrders">
+                <label class="form-input-inline">
+                  <span class="label">画数表示 </span>
+                  <input type="checkbox" id="displayOrders" name="displayOrders" value="ON" checked="checked" on    change="optionCtrl.updateForm()">
+                  <span class="checkbox-label" label-on="ON" label-off="OFF"></span>
+                </label>
+              </div>
+    
+              <div class="form-input-fontsize">
+                <label class="form-input-inline">
+                  <span class="label">　font　</span>
+                  <input type="range" id="fontSize" name="fontSize" value="3" min="1" max="10" step="1" oninput="   document.getElementById('outputFontsize').value=this.value">
+                  <output id="outputFontsize"> 3</output>
+                </label>
+              </div>
+    
+              <div class="form-input-colorGroups">
+                <label class="form-input-inline">
+                  <span class="label">画色タイプ</span>
+                    <select id="colorGroups" name="colorGroups" onchange="optionCtrl.updateForm()" >
+                      <option value="kakusuu" selected="selected">画数別</option>
+                      <option value="bushu"                      >部首別</option>
+                      <option value="buhin"                      >部品別</option>
+                      <option value="sirokuro"                   >白黒</option>
+                    </select>
+                </label>
+              </div>
+    
+              <div class="form-input-strokeWidth">
+                <label class="form-input-inline">
+                  <span class="label">　サイズ</span>
+                  <input type="range" id="strokeWidth" name="strokeWidth" value="3" min="1" max="10" step="1" oninput   ="document.getElementById('outputStrokeWidth').value=this.value">
+                  <output id="outputStrokeWidth"> 3</output>
+                </label>
+              </div>
+    
+              <div class="form-input-strokeSlider">
+                <label class="form-input-inline">
+                  <span class="label">　制御　</span>
+                  <input type="range" id="strokeSlider" class="strokeSlider" min="0" max="100" value="0" step="1" oninput="optionCtrl.updateSlider(this.value)">
+                  <output id="outputstrokeSlider"> 0</output>
+                </label>
+              </div>
+    
+              <div class="form-input-zoomFactor">
+    <!--            <label class="form-input-inline">-->
+                <span class="label">ズーム    </span>
+    <!--            <input type="range" id="zoomFactor" name="zoomFactor" min="-10" max="20" value="0" step="0.01"    onchange="optionCtrl.updateSlider2(this.value)"/> -->
+                <span style="float: right;">
+                  <button class="minusButton" id="minusButton" type="button" onclick="optionCtrl.updateMinus()" > ➖     </button>　
+                  <button class="resetButton" id="resetButton" type="button" onclick="optionCtrl.updateReset()" >   リセット</button>　
+                  <button class="plusButton"  id="plusButton"  type="button" onclick="optionCtrl.updatePlus()" > ➕    </button>　
+    <!--            <output id="outputZoomSlider">  0</output>-->
+    <!--            </label>-->
+                </span>
+              </div>
+            </fieldset>
+
+<!-- 既存フォーム-->
+        <div class="form-radio" hidden>
+          <input hidden id="form_start_auto" type="radio" name="start" value="autostart" checked="checked" onchange="optionCtrl.updateForm()">
+          <label hidden for="form_start_auto">アニメ再生自動</label>
+          <input hidden id="form_start_manuel" type="radio" name="start" value="manual" onchange="optionCtrl.updateForm()">
+          <label hidden for="form_start_manuel">手動</label>
+        </div>
+
+        <fieldset hidden class="manual-trigger-class-panel">
+          <label class="form-input-inline">
+            <span  hidden class="label">トリガークラス名</span>
+            <input hidden type="text" name="triggerClass" value="start">
+          </label>
+        </fieldset>
+
+        <!-- -->
+        <fieldset>
+          <div class="form-input-type">
+            <label class="form-input-inline">
+              <span class="label" >アニメタイプ </span>
+              <select name="type" id="type" onchange="optionCtrl.updateForm()" >
+                <option value="delayed">Delayed start</option>
+                <option value="async">  Syncronous</option>
+                <option value="oneByOne" selected="selected">One By One</option>
+                <option value="scenario">scenario</option>
+                <option value="scenario-sync">scenario sync</option>
+<!--             <option value="script">script</option>-->
+              </select>
+            </label>
+          </div>
+
+          <label class="form-input-inline delay-panel">
+            <span class="label" >遅延 <span class="label-info"> ms</span></span>
+            <input type="range" id="delay" name="delay" value="0" min="0" max="20000" step="1000" oninput="document.getElementById('outputDelay').value=this.value" >
+            <output id="outputDelay">0</output>
+          </label>
+
+          <div class="form-input-duration">
+            <label class="form-input-inline">
+              <span class="label">期間 </span>
+              <input type="range" id="duration" name="duration" value="200" min="1" max="2001" step="10" oninput="document.getElementById('outputDuration').value=this.value">
+              <output id="outputDuration"> 200</output>
+            </label>
+          </div>
+
+          <div class="form-input-duration">
+            <label class="form-input-inline">
+              <span class="label" >パスタイミング</span>
+              <select name="animTimingFunction" id="animTimingFunction">
+                <option value="Vivus.LINEAR" selected="selected">Linear</option>
+                <option value="Vivus.EASE">Ease</option>
+                <option value="Vivus.EASE_OUT">Ease out</option>
+                <option value="Vivus.EASE_IN">Ease in</option>
+                <option value="Vivus.EASE_OUT_BOUNCE">Ease out bounce</option>
+              </select>
+            </label>
+          </div>
+        </fieldset>
+
+        <!-- ループ-->
+        <fieldset>
+          <label class="form-input-inline">
+            <span class="label">ループ</span>
+            <span>
+              <input type="checkbox" id="loop" name="loop" value="ON" onchange="optionCtrl.updateForm()"/>
+              <span class="checkbox-label" label-on="ON" label-off="OFF"></span>
+            </span>
+          </label>
+
+          <div class="control-loop-panel">
+            <label class="form-input-inline">
+              <span class="label">開始遅延 <span class="label-info"> ms</span></span>
+<!--              <input type="number" name="loopStart" value="0" step="100"/>-->
+            <input type="range" id="loopStart" name="loopStart" value="0" min="0" max="2000" step="100" oninput="document.getElementById('outputloopStart').value=this.value">
+            <output id="outputloopStart">0</output>
+            </label>
+            <label class="form-input-inline">
+              <span class="label">一時停止 <span class="label-info"> ms</span></span>
+<!--              <input type="number" name="loopEnd" value="3000" step="100"/>-->
+              <input type="range" id="loopEnd" name="loopEnd" value="3000" min="0" max="20000" step="100" oninput="document.getElementById('outputloopEnd').value=this.value">
+              <output id="outputloopEnd">3000</output>
+            </label>
+            <label class="form-input-inline">
+              <span class="label">フェード <span class="label-info"> ms</span></span>
+<!--              <input type="number" name="loopTransition" value="400" step="100"/>-->
+              <input type="range" id="loopTransition" name="loopTransition" value="400" min="0" max="20000" step="100" oninput="document.getElementById('outputloopTransition').value=this.value">
+              <output id="outputloopTransition">400</output>
+            </label>
+          </div>
+        </fieldset>
+      </form>
+  </div>
+
+  <div class="tab-body_item tab-body_item-2">
+<!-- 漢字情報      -->
+    <span style="text-align: left;" >
+      <span class="Buikan">
+        <font size="4" color="#ffffff">　
+          <output id="outputBuikan"></output><br>
+        </font>
+      </span>
+
+      <span class="kanjiInfo">
+        <a id="output">kanji info</a>
+        <div id="error" class="error"></div>
+      </span>
+    </span>
+  </div>
+
+  <div class="tab-body_item tab-body_item-3">
+<!-- 更新・ダウンロード-->
+    <button type="button" class="full-width" onclick="optionCtrl.download()" >ダウンロード</button>
+  </div>
+</div>
+
+
+    </div>
+
+    <!-- Le scripts -->
+    <script type="text/javascript" src="https://ajax.googleapis.com/ajax/libs/jquery/1.9.1/jquery.js" charset="UTF-8"></script>
+    <script type="text/javascript" src="https://ajax.googleapis.com/ajax/libs/jquery/2.0.0/jquery.min.js" charset="UTF-8"></script>
+    <script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/codemirror/5.46.0/codemirror.js" charset="UTF-8"></script>
+    <script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/codemirror/5.46.0/mode/sql/sql.min.js" charset="UTF-8"></script>
+    <script type="text/javascript" src="scripts/dist/sql-wasm.js" charset="UTF-8"></script>
+
+    <script type="text/javascript" src="scripts/stylesheet.js" charset="UTF-8"></script>
+    <script type="text/javascript" src="scripts/pathformer.js" charset="UTF-8"></script>
+    <script type="text/javascript" src="scripts/utils.js" charset="UTF-8"></script>
+    <script type="text/javascript" src="scripts/ViewerCtrl.js" charset="UTF-8"></script>
+    <script type="text/javascript" src="scripts/OptionsCtrl.js" charset="UTF-8"></script>
+<!--    <script type="text/javascript" src="scripts/vivus-jp.js" charset="UTF-8"></script>-->
+    <script type="text/javascript" src="scripts/vivus-jp2.js" charset="UTF-8"></script>
+<!--    <script type="text/javascript" src="scripts/vivus.min.js" charset="UTF-8"></script>-->
+    <script type="text/javascript" src="scripts/main.js" charset="UTF-8"></script>
+    <script>
+    </script>
+
+  </body>
+</html>

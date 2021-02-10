@@ -1,0 +1,21 @@
+@import 'variables.css';
+
+.introbox {
+  width: 400px;
+  max-width: 90%;
+  padding: 1rem;
+  margin: 5% auto;
+  color: var(--shade-dark);
+  text-align: center;
+  background: var(--shade-lighter);
+  z-index: 100;
+}
+
+.introbox object {
+  width: 100%;
+}
+
+.viewer.dark .introbox {
+  color: var(--shade-light);
+  background: var(--shade-darker);
+}

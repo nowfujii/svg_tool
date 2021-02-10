@@ -1,0 +1,12 @@
+:root {
+  --shade-dark:     #191970;	/*darkblue #201c24;	上より少し薄い黒	サイドバーの背景色*/
+  --shade-darker:   #000008;	/*#000008 bmidnightblue #131118;	ほぼ黒*/
+
+  --shade:          #787878;	/*濃いグレー*/
+  --shade-light:    #b2b2b2;	/*グレー*/
+  --shade-lighter:  #f6f6f6;	/*薄いグレー*/
+
+  --primary:        #FF1294;	/*派手なピンク*/
+
+
+}

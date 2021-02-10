@@ -1,0 +1,141 @@
+@import 'variables.css';
+
+/* Tab */
+.tab{
+  display: flex;
+  flex-direction: row;
+  text-align: center;
+  background-color:var(--shade-dark);
+  margin:0;
+}
+.tab_item{
+  flex:1;
+  flex-basis: 120px;
+}
+.tab_link{
+  display: block;
+  text-decoration: none;
+  color: var(--shade-light);
+  background-color:var(--shade-darker);
+  cursor:pointer;
+  border-top-right-radius: 15px;
+  border-top-left-radius: 15px;
+}
+.tab_link.on{
+  background-color:var(--primary);
+  color: var(--shade-darker);
+}
+.tab-body_item{
+  display:none;
+  text-align:left;
+  background-color:var(--shade-darker);
+}
+.tab-body_item.on{
+  display:block;
+  background-color:var(--shade-darker);
+}
+
+
+/* Sidebar */
+.sidebar {
+  position: absolute;
+  top: 0;
+  bottom: 0;
+  left: 0;
+  width: 15rem;
+  height: 100%;  /* remember to set 100% height for all its parents too, including html and body */
+  overflow: auto;
+}
+
+.sidebar-head {
+  font-size: 1.20rem
+}
+
+.sidebar > * {
+  padding: .10rem;
+}
+
+/*スライダーの数値*/
+.output {
+  font-size: 1.2em;
+}
+
+/* Label */
+.label {
+  padding: .8rem 0;
+}
+
+.label-info {
+  font-style: italic;
+  font-size: .75em;
+}
+
+/* Form input */
+.form-input-inline, .form-radio {
+  display: block;
+  margin: .5rem 0;
+}
+
+.form-input-inline {
+  display: flex;
+  justify-content: space-between;
+
+ height: 2rem;
+ display: -webkit-flex;
+ display: flex;
+ -webkit-align-items: center; /* 縦方向中央揃え（Safari用） */
+ align-items: center; /* 縦方向中央揃え */
+}
+
+.form-input-inline input[type="text"] {
+  width: 6rem;
+}
+
+.form-input-inline input[type="number"] {
+  width: 4rem;
+}
+
+.form-input-inline select {
+  width: 6rem;
+}
+
+.form-input-inline input[type="range"] {
+  width: 5rem;
+}
+
+/* Form radio */
+.form-radio {
+  display: flex;
+  border: .25rem solid var(--shade-darker);
+  border-radius: .25rem;
+  background-color: var(--shade-darker);
+}
+
+.form-radio > input[type="radio"] {
+  display: none;
+  text-align: center;
+}
+
+.form-radio > label {
+  flex-grow: 1;
+  padding: .25rem;
+  border-radius: .125rem;
+  text-align: center;
+}
+
+.form-radio > label:last-child {
+  border-right: none;
+}
+
+.form-radio > input[type="radio"]:checked + label {
+  color: var(--shade-dark);
+  background-color: var(--shade-light);
+}
+
+.license {
+  font-size: .60rem;
+}
+
+.kanjiInfo {
+  font-size: .80rem;
+}

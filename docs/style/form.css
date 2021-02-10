@@ -1,0 +1,114 @@
+@import 'variables.css';
+
+label {
+  cursor: pointer;
+}
+
+input, select, option {
+  font-size: 1rem;
+  padding: .25em 0;
+  border: none;
+  border-bottom: 1px solid var(--shade-light);
+  border-radius: 0;
+  color: var(--shade-light);
+  background: none;
+  line-height: 1.2;
+  height: 1.2rem;
+  box-sizing: initial;
+  cursor: pointer;
+  -moz-appearance: none;
+  -webkit-appearance: none;
+}
+
+input:active, select:active, option:active, button:active,
+input:focus,  select:focus,  option:focus,  button:focus {
+  border-color: var(--primary);
+  outline: none;
+}
+
+fieldset {
+  padding: .25rem .5rem;
+  border-radius: .25rem;
+  border: none;
+  margin: .5rem 0;
+  background-color: var(--shade-darker);
+}
+
+
+/**
+ * Fancy checkboxes
+ *
+ * <input type="checkbox"/>
+ * <span class="checkbox-label" label-on="Enabled!" label-off="off."></span>
+ */
+input[type='checkbox'] {
+  display: none;
+}
+input[type='checkbox'] + .checkbox-label {
+  padding: 0 .75em;
+  background-color: var(--shade-darker);
+  border: none;
+  color: var(--shade-light);
+  transition: all .3s;
+  box-sizing: border-box;
+}
+input[type='checkbox'] + .checkbox-label:before {
+  content: attr(label-off);
+  border-radius: .25rem;
+  font-size: 1rem;
+}
+input[type='checkbox']:checked + .checkbox-label {
+  background-color: var(--primary);
+  color: var(--shade-darker);
+  border-radius: .25rem;
+  font-size: 1rem;
+}
+input[type='checkbox']:checked + .checkbox-label:before {
+  content: attr(label-on);
+}
+
+
+input[type='submit'] {
+  border: 1px solid var(--primary);
+  border-radius: .75rem;
+  font-size: 1rem;
+  color: var(--primary);
+  background: var(--shade-darker);
+}
+input[type='submit']:active {
+  background: var(--shade-darker);
+  color: var(--shade-lighter);
+}
+
+input[type='submit']:hover {
+  background: var(--primary);
+  color: var(--shade-darker);
+}
+
+/**
+ * Buttons
+ */
+button {
+  border: 1px solid var(--primary);
+  border-radius: .25rem;
+  font-size: 1rem;
+  color: var(--primary);
+  background: var(--shade-darker);
+}
+button:hover {
+  background: var(--primary);
+  color: var(--shade-darker);
+}
+button:active {
+  background: var(--shade-darker);
+  color: var(--shade-lighter);
+}
+button:disabled, button:disabled:hover, button:disabled:active {
+  border-color: var(--shade-darker);
+  background: none;
+  color: var(--shade-darker);
+}
+button.full-width {
+  padding: .5em;
+  box-sizing: border-box;
+}
