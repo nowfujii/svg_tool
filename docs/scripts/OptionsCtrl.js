@@ -52,7 +52,8 @@ function OptionController (el, viewer) {
 var DB = null;
 OptionController.prototype.loadSqlDB = function () {
   var baseUrl = 'scripts/dist/';
-  var url = "http://www.nowpross.com/tegaki/svg_tool/scripts/dist/newdic.sqlite";
+//  var url = "http://www.nowpross.com/tegaki/svg_tool/scripts/dist/newdic.sqlite";
+  var url = "https://nowfujii.github.io/svg_tool/scripts/dist/newdic.sqlite";
   var config = {
     locateFile: filename => `${baseUrl}/${filename}`
   }
@@ -412,7 +413,7 @@ OptionController.prototype.changeStrokeNum = function (myVivus) {
 
 /**
  * 指定した漢字の情報を取得
- *  
+ *
  */
 OptionController.prototype.getKanjiInfo = function (n) {
   var dbIndex = ["番号　　　","漢字　　　","画数　　　","部首　　　","部首読み　","音読み　　","訓読み　　","表外音読み","表外訓読み"
@@ -421,7 +422,7 @@ OptionController.prototype.getKanjiInfo = function (n) {
   var result = "";
   var options = _this.getOptions(_this);             //サイドバーで設定したオプション
 
-  //サロゲート文字を含んだN文字目の文字  
+  //サロゲート文字を含んだN文字目の文字
   var str = "";
   if (!options.kanjiWord) {
     console.log("kanjiWordの指定がありません！");
@@ -579,7 +580,7 @@ OptionController.prototype.updateSlider = function (strokeSlider) {
 
 /**
  * 指定されたstrokeNumのpathを返す
- * 
+ *
  */
 OptionController.prototype.getStrokePath = function (strokeNum) {
   var paths = document.querySelectorAll('path');
@@ -641,7 +642,7 @@ OptionController.prototype.zoomAtCenter = function (svg, scale) {
 
 /**
   *次のストロークを一画づつ再生させる
-  * @param 
+  * @param
   */
 OptionController.prototype.strokeNext = function () {
   var options = this.getOptions(this);
@@ -684,7 +685,7 @@ console.log("this.strokeNow:",this.strokeNow);
 
 /**
   *前のストロークを一画づつ再生させる
-  * @param 
+  * @param
   */
 OptionController.prototype.strokeBack = function () {
   var options = this.getOptions(_this);
@@ -821,7 +822,7 @@ console.log("offset:",offset);
 
 /**
  * 指定されたpathNumの style.strokeDashOffset を offsetにてセットする
- * 
+ *
  */
 OptionController.prototype.strokeDashoffset = function (pathNum, offset) {
   var path = _this.vivus.map[pathNum];
