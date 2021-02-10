@@ -134,7 +134,7 @@ console.log("setVivus:kanji= ",str);
       option = {animTimingFunction:Vivus.LINEAR};
   }
 
-  option.file        = '../kanjivg/kanji/' +  fname + '.svg';   //サーバーのフォルダー構成にkanjivg/kanji/があるのが前提
+  option.file        = './kanji/' +  fname + '.svg';   //サーバーのフォルダー構成にkanjivg/kanji/があるのが前提
   option.onReady     = function(myVivus) {
     //SVGファイル読み込み後のコールバック
 console.log("callback: ",myVivus);
